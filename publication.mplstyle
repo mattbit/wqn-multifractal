@@ -1,0 +1,70 @@
+axes.titlelocation: left
+axes.titlesize: 10
+axes.titleweight: medium
+axes.labelsize: 9
+axes.labelpad: 0.5
+axes.axisbelow: True
+axes.edgecolor: .5
+axes.facecolor: none
+axes.linewidth: 0.5
+axes.prop_cycle: cycler('color', ['66c2a5','fc8d62','8da0cb'])
+# axes.prop_cycle: cycler('color', ['1b9e77','d95f02','7570b3'])
+# axes.prop_cycle: cycler('color', ["#56b4e9", "#009e73", "#f0e442", "#0072b2", "#d55e00", "#cc79a7", "#e69f00",])
+axes.grid: False
+
+figure.facecolor: white
+figure.figsize: 7.25, 7.25
+figure.titleweight: medium
+figure.titlesize: 10
+figure.constrained_layout.h_pad: 0.05
+figure.constrained_layout.w_pad: 0.05
+figure.constrained_layout.hspace: 0
+figure.constrained_layout.wspace: 0
+
+font.family: sans-serif
+font.sans-serif: Inter, Arial, Liberation Sans, DejaVu Sans, Bitstream Vera Sans, sans-serif
+font.weight: normal
+font.size: 9
+svg.fonttype: none
+
+grid.color: white
+grid.linestyle: -
+grid.linewidth: 0 
+
+image.cmap: viridis
+
+legend.fontsize: 10
+legend.labelspacing: 0.2
+legend.handleheight: 0.7
+legend.handlelength: 1.2
+legend.handletextpad: 0.4
+legend.frameon: False
+legend.fancybox: False
+legend.numpoints: 1
+legend.scatterpoints: 1
+
+lines.linewidth: 1
+lines.markeredgewidth: 0
+lines.markersize: 7
+lines.solid_capstyle: round
+
+patch.facecolor: 4C72B0
+patch.linewidth: .3
+
+text.color: .15
+
+xtick.direction: in
+xtick.labelsize: 9
+xtick.major.pad: 5
+xtick.major.size: 3
+xtick.major.width: 1
+xtick.minor.size: 0
+xtick.minor.width: .5
+
+ytick.direction: in
+ytick.labelsize: 9
+ytick.major.pad: 5
+ytick.major.size: 3
+ytick.major.width: 1
+ytick.minor.size: 0
+ytick.minor.width: .5

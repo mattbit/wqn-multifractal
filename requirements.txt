@@ -1,0 +1,6 @@
+numpy
+scipy
+matplotlib
+pywavelets
+wfdb
+tqdm
