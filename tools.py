@@ -1,5 +1,6 @@
 import numpy as np
 import scipy.signal as ss
+import pywt
 
 
 def filter_bandpass(signal, low, high, fs, order=2):
@@ -56,3 +57,36 @@ def intervals_to_mask(intervals, size=None):
         mask[i:j] = True
 
     return mask
+
+
+class WMFA:
+    def __init__(self, signal, wavelet="db3"):
+        self.signal = signal
+        self.wavelet = wavelet
+        self._calc_coefficients()
+
+    def _calc_coefficients(self):
+        padded_signal = np.pad(self.signal, (1, 1), constant_values=np.inf)
+        _, *cs = pywt.wavedec(padded_signal, wavelet=self.wavelet)
+        j_max = len(cs)
+        scales = np.arange(j_max, 0, -1)
+
+        # Normalize coefficients based on L1 norm
+        cs = [c_[np.isfinite(c_)] / (2 ** (0.5 * j_)) for c_, j_ in zip(cs, scales)]
+
+        self.coeffs_ = cs
+        self.scales_ = np.arange(len(cs), 0, -1)
+
+    def structure_function(self, q):
+        return np.array([(np.abs(d_) ** q).mean() for d_ in self.coeffs_])
+
+    def sup_coeffs(self):
+        return np.array([np.abs(d_).max() for d_ in self.coeffs_])
+
+    def inf_coeffs(self):
+        return np.array([np.abs(d_).min() for d_ in self.coeffs_])
+
+    def scales_to_freqs(self, sampling_frequency, scales=None):
+        if scales is None:
+            scales = self.scales_
+        return pywt.scale2frequency(self.wavelet, 2**scales) * sampling_frequency
