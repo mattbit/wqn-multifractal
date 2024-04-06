@@ -84,7 +84,7 @@ data_props = [
 
 xspace = np.linspace(0, 1, LENGTH)
 
-main_fig = plt.figure(figsize=(7.25, 6.25), constrained_layout=True)
+main_fig = plt.figure(figsize=(7.25, 6), constrained_layout=True)
 figs = main_fig.subfigures(nrows=3)
 
 for n_fig, data in enumerate(data_props):
