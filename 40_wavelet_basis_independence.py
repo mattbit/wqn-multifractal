@@ -19,6 +19,7 @@ BLUE_L = "#a1b4df"
 
 # %% WQN algorithm
 
+
 def apply_wqn(
     signal, signal_artifacted, wavelet="sym5", mode="antisymmetric", max_level=None
 ):
@@ -68,26 +69,42 @@ wavelets = [
 fig, axs = plt.subplots(
     ncols=2,
     nrows=(len(wavelets) + 1) // 2,
-    figsize=(7.25, 7.25 / 2),
+    figsize=(7.25, 3.2),
     sharey=True,
     sharex=True,
     constrained_layout=True,
 )
 faxs = np.ravel(axs)
+art_rmse = tools.calc_rmse(signal, artifacted)
 
 ts = np.arange(len(signal)) / freq
 (la,) = faxs[0].plot(ts, artifacted, c=RED, lw=0.5, label="Artifacted")
 (lo,) = faxs[0].plot(ts, signal, c="k", lw=0.5, label="EEG")
 faxs[0].set_title("Artifacted EEG")
-axs[0, 0].legend(handles=[lo, la], loc="upper left", ncol=2, mode="expand")
+axs[0, 0].legend(handles=[lo, la], loc="lower left", ncol=2, mode="expand")
+
+axs[0, 0].text(
+    0.05,
+    0.8,
+    f"Artifact RMSE: {art_rmse:.1f} µV",
+    transform=axs[0, 0].transAxes,
+)
 
 for n, wdata in enumerate(wavelets):
     *_, rec = apply_wqn(
         signal, artifacted, wavelet=wdata["wavelet"], mode="antisymmetric"
     )
+    rmse = tools.calc_rmse(signal, rec)
     faxs[n + 1].plot(ts, signal, c="k", lw=0.5)
     faxs[n + 1].plot(ts, rec, lw=0.5, label="WQN")
     faxs[n + 1].set_title(f"{wdata['title']}")
+    faxs[n + 1].text(
+        0.05,
+        0.8,
+        f"WQN RMSE: {rmse:.2f} µV",
+        transform=faxs[n + 1].transAxes,
+    )
+
 
 axs[0, 1].legend()
 
@@ -249,6 +266,8 @@ else:
         epochs_art_emg=epochs_art_emg,
     )
 
+epochs_sig
+
 # %% Comparison of families
 
 wavelets = [
@@ -298,7 +317,7 @@ else:
 categories = dict(zip(df.wavelet.values, df.wavelet.index))
 
 fig, (axl, axr) = plt.subplots(
-    ncols=2, figsize=(7.25, 2.8), sharey=True, constrained_layout=True
+    ncols=2, figsize=(7.25, 2.5), sharey=True, constrained_layout=True
 )
 for w, dx in df.groupby("wavelet"):
     aeog = axl.bar(
