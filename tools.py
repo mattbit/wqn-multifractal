@@ -3,6 +3,10 @@ import scipy.signal as ss
 import pywt
 
 
+def calc_rmse(x1, x2):
+    return np.sqrt(((x1 - x2) ** 2).mean())
+
+
 def filter_bandpass(signal, low, high, fs, order=2):
     Wn = 2 * np.array([low, high]) / fs
     sos = ss.butter(order, Wn, btype="bandpass", output="sos")
